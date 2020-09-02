@@ -26,17 +26,10 @@ init(convert=True)
 
 
 def product_search_atc(session, keywords, monitorDelay):
-    productFound = False
-
-    while (productFound == False):
+    while (True):
         print("Gathering Products...")
         productDict = {}
         baseURL = 'http://' + data['store'] + '.com'
-        link = baseURL + '/collections/all'
-        productsURL = baseURL + '/products.json'
-        r = session.get(link, verify=False)
-        bs = soup(r.text, "html.parser")
-        print(link)
 
         try:
             with open('productDict.json', 'r') as fp:
@@ -58,8 +51,10 @@ def product_search_atc(session, keywords, monitorDelay):
                 print(productLink)
 
                 variantDict = {}
+                variantDict.update(
+                    make_variant_dict(productLink)
+                )
 
-                variantDict = make_variant_dict(productLink)
                 print(variantDict)
                 return variantDict
 
