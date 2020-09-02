@@ -18,7 +18,7 @@ def get_page(page, url):
     return products
 
 
-def make_product_dict(url):
+def make_product_dict(url, keywords):
     page = 1
     products = get_page(page, url)
     while products:
@@ -46,6 +46,10 @@ def make_product_dict(url):
                     prodDict.update(
                         {name: {"Variant": variant_name, "url": product_url}})
 
+                # Found what we want so just return
+                if all(x in name for x in keywords):
+                    return prodDict
+
                 name = tmp
         page += 1
         products = get_page(page, url)
@@ -60,12 +64,14 @@ def make_variant_dict(url):
     page = 1
     product = get_page(page, url)
     for var in product:
+        if var['option1'] is not None:
+            variant = var['option1']
         if var['option2'] is not None:
             variant = var['option2']
         if var['option3'] is not None:
-            variant = var['option2']
+            variant = var['option3']
         id = var['id']
-        print("CCCCC", variant, id, "\n")
+        print("size: ", variant, id, "\n")
         if variant:
             variantDict.update({variant: id})
 

@@ -42,7 +42,7 @@ def product_search_atc(session, keywords, monitorDelay):
             with open('productDict.json', 'r') as fp:
                 productDict = json.load(fp)
         except:
-            productDict = make_product_dict(baseURL)
+            productDict = make_product_dict(baseURL, keywords)
             with open('productDict.json', 'w') as fp:
                 json.dump(productDict, fp)
 
