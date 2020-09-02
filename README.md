@@ -4,6 +4,8 @@ Checkout Shopify Bot
 # What This Bot Can Do
 Currently, this bot is able to find the recently loaded products on a shopify site, around the past 30 loaded products, be able to add to cart and checkout using post and get request. You are able to add some modifications such as monitor delay and add to cart delays, but customization is very limited as of now.
 
+***UPDATE:*** As of August 2020, the original repo from which this one is forked is not functional. The updates in this fork fix this. Specifically, the method for searching for a product and selecting the size/variant has been changed significantly. 
+
 # Tasks to Get Done
 1. Add a captcha solving window so that checkouts with captcha will be able to checkout using the bot. This is what I am working on currently. (The files in the project named captcha are just files that are not working as of now). I don't want to use selenium for the captcha harvester so I need to learn some GUI stuff for python to achieve this.
 
