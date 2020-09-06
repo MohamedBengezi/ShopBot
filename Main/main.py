@@ -4,6 +4,8 @@ import pprint
 import urllib3
 from colorama import init, Fore, Back, Style
 import time
+import os
+import pathlib
 from bs4 import BeautifulSoup as soup
 from variant_scraper import make_product_dict, make_variant_dict
 
@@ -20,7 +22,6 @@ def getData():
 data = getData()
 pp = pprint.PrettyPrinter(indent=3)
 init(convert=True)
-
 # gets all the new products from the shopify site and assigns each item a link
 # filtering through the found products to get the product we want, then going to the link and adding to cart
 
@@ -29,14 +30,15 @@ def product_search_atc(session, keywords, monitorDelay):
     while (True):
         print("Gathering Products...")
         productDict = {}
+        jsonName = "productDict.json"
         baseURL = 'http://' + data['store'] + '.com'
 
         try:
-            with open('productDict.json', 'r') as fp:
+            with open(jsonName, 'r') as fp:
                 productDict = json.load(fp)
         except:
             productDict = make_product_dict(baseURL, keywords)
-            with open('productDict.json', 'w') as fp:
+            with open(jsonName, 'w') as fp:
                 json.dump(productDict, fp)
 
         print("Successfully gathered products")
@@ -60,6 +62,11 @@ def product_search_atc(session, keywords, monitorDelay):
 
         else:
             print(Fore.RED + 'No products found, searching...')
+            # Removing saved product dictionary and rescanning
+            jsonFilepath = str(
+                pathlib.Path(__file__).parent.absolute()
+            ) + "\\" + jsonName
+            os.remove(jsonFilepath)
             time.sleep(monitorDelay)
 
 
