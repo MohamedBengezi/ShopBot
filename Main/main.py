@@ -30,7 +30,7 @@ def product_search_atc(session, keywords, monitorDelay):
     while (True):
         print("Gathering Products...")
         productDict = {}
-        jsonName = "productDict.json"
+        jsonName = data['store'] + "_productDict.json"
         baseURL = 'http://' + data['store'] + '.com'
 
         try:
@@ -63,10 +63,10 @@ def product_search_atc(session, keywords, monitorDelay):
         else:
             print(Fore.RED + 'No products found, searching...')
             # Removing saved product dictionary and rescanning
-            jsonFilepath = str(
-                pathlib.Path(__file__).parent.absolute()
-            ) + "\\" + jsonName
-            os.remove(jsonFilepath)
+            # jsonFilepath = str(
+            #     pathlib.Path(__file__).parent.absolute()
+            # ) + "\\" + jsonName
+            # os.remove(jsonFilepath)
             time.sleep(monitorDelay)
 
 
