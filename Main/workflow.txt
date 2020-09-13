@@ -7,7 +7,7 @@ Go to product search page                   https://www.nvidia.com/en-us/shop/ge
                                             NVIDIA%20GEFORCE%20RTX%203080
 
 While is button is not ADD TO CART          check label of "a" (link) elements where "cta-button" is in "class" attribute
-    Refresh page                            Ctrl + F5
+    Refresh page                            Shift + F5
 Click ADD TO CART button                    <a class="featured-buy-link link-btn brand-green cta-button js-add-button" href="javascript:void(0);">Add to cart</a>
 
 Click CHECKOUT button                       <div class="nv-button js-checkout cart__checkout-button">CHECKOUT</div>
