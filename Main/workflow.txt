@@ -1,0 +1,17 @@
+Go to                                       https://store.nvidia.com/DRHM/store?Action=Logout&SiteID=nvidia&Locale=en_US&ThemeID=326200&Env=BASE&nextAction=help
+Enter login info                            id="loginEmail"                 <input type="text" name="loginID" size="20" value="" id="loginEmail" placeholder="Email Address">
+                                            id="loginPassword"              <input type="password" name="password" size="20" value="" id="loginPassword" placeholder="Password">
+Click Login button                          <input type="submit" value="login" class="dr_button">
+
+Go to product search page                   https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%202060%20SUPER
+                                            NVIDIA%20GEFORCE%20RTX%203080
+
+While is button is not ADD TO CART          check label of "a" (link) elements where "cta-button" is in "class" attribute
+    Refresh page                            Ctrl + F5
+Click ADD TO CART button                    <a class="featured-buy-link link-btn brand-green cta-button js-add-button" href="javascript:void(0);">Add to cart</a>
+
+Click CHECKOUT button                       <div class="nv-button js-checkout cart__checkout-button">CHECKOUT</div>
+Click CONTINUE button                       <input type="submit" class="dr_button" value="continue" onclick="q=false;disableButton(this);">
+Enter CVV                                   id="cardSecurityCode"          <input type="text" name="cardSecurityCode" size="4" value="" id="cardSecurityCode" autocomplete="off" aria-labelledby="dr_ccSecurityCodeEntry">
+Click CONTINUE button again                 <input type="submit" class="dr_button" value="continue" onclick="q=false;disableButton(this);">
+Click SUBMIT button                         <input type="submit" class="dr_button" value="submit" onclick="return validateShipping();">
