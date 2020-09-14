@@ -32,7 +32,7 @@ def run(username, password, cvv):
         card_button.click()
         driver.find_element_by_xpath(continue_xpath).click()
         print('selected card!!!!!!!')
-    # driver.find_element_by_xpath("//input[@type='submit' and @value='submit']").click()  # uncomment to actually BUY!
+    driver.find_element_by_xpath("//input[@type='submit' and @value='submit']").click()
     return driver
 
 
