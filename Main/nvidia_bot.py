@@ -71,6 +71,20 @@ def run(username, password, cvv):
             add_to_cart_button.click()
             break
     wait.until(ElementHasClass('cart__checkout-button')).click()
+
+    wait.until(ElementHasId('loginID'))
+
+    try:
+        login_email = driver.find_element_by_id('loginID')
+        login_pass = driver.find_element_by_id('loginPass')
+        submit_but = driver.find_element_by_id('dr_cc_login')
+    except NoSuchElementException:
+        print('Already logged in', NoSuchElementException)
+    else:
+        login_email.send_keys(str(username))
+        login_pass.send_keys(str(password))
+        submit_but.click()
+
     wait.until(ElementHasXpath(continue_xpath)).click()
     wait.until(ElementHasId('cardSecurityCode')).send_keys(str(cvv))
     wait.until(ElementHasXpath(continue_xpath)).click()
@@ -109,9 +123,12 @@ if __name__ == '__main__':
     parser.add_argument('-c', '--cvv')
     parser.add_argument('-q', '--quit', default=False)
     args = parser.parse_args()
-    user_str = input('Whats your NVIDIA username? ') if args.username is None else args.username
-    pass_str = getpass.getpass(prompt='Whats your NVIDIA password? ') if args.password is None else args.password
-    cvv_str = getpass.getpass(prompt='Whats your Credit card cvv? ') if args.cvv is None else args.cvv
+    user_str = input(
+        'Whats your NVIDIA username? ') if args.username is None else args.username
+    pass_str = getpass.getpass(
+        prompt='Whats your NVIDIA password? ') if args.password is None else args.password
+    cvv_str = getpass.getpass(
+        prompt='Whats your Credit card cvv? ') if args.cvv is None else args.cvv
     main_driver = run(username=user_str, password=pass_str, cvv=cvv_str)
     if not args.quit:
         input('Press enter to quit\n')
