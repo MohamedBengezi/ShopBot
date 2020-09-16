@@ -62,6 +62,7 @@ def run(username, password, cvv):
     pass_text.send_keys(str(password))
     pass_text.submit()
     driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%203080")
+    # driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%202060%20SUPER")
     while True:
         try:
             add_to_cart_button = wait_add.until(ElementHasPartial('CART'))
@@ -71,46 +72,54 @@ def run(username, password, cvv):
             add_to_cart_button.click()
             break
     wait.until(ElementHasClass('cart__checkout-button')).click()
-
-    wait.until(ElementHasId('loginID'))
-
-    try:
-        login_email = driver.find_element_by_id('loginID')
-        login_pass = driver.find_element_by_id('loginPass')
-        submit_but = driver.find_element_by_id('dr_cc_login')
-    except NoSuchElementException:
-        print('Already logged in', NoSuchElementException)
-    else:
-        login_email.send_keys(str(username))
-        login_pass.send_keys(str(password))
-        submit_but.click()
-
-    wait.until(ElementHasXpath(continue_xpath)).click()
-    wait.until(ElementHasId('cardSecurityCode')).send_keys(str(cvv))
-    wait.until(ElementHasXpath(continue_xpath)).click()
     while True:
         try:
-            submit_button = driver.find_element_by_xpath(submit_xpath)
+            driver.find_element_by_xpath(continue_xpath).click()
         except NoSuchElementException:
             try:
-                card_button = driver.find_element_by_id('cCard1')
+                driver.find_element_by_id('loginID').send_keys(str(username))
             except NoSuchElementException:
                 continue
             else:
-                card_button.click()
+                login_pass = driver.find_element_by_id('loginPass')
+                login_pass.send_keys(str(password))
+                login_pass.submit()
                 wait.until(ElementHasXpath(continue_xpath)).click()
                 break
         else:
-            submit_button.click()
-            print(datetime.now())
             break
-    try:
-        final_submit = wait.until(ElementHasXpath(submit_xpath))
-    except TimeoutException:
-        pass
-    else:
-        final_submit.click()
-        print(datetime.now())
+    sec_code = wait.until(ElementHasId('cardSecurityCode'))
+    sec_code.send_keys(str(cvv))
+
+    # Below two code blocks are to test if .submit() is faster than finding the CONTINUE button and clicking it
+
+    start = datetime.now()
+    sec_code.submit()
+    finish = datetime.now()
+    diff = finish - start
+    print('Time to use sec_code.submit(): ' + str(diff.total_seconds()))
+
+    # start = datetime.now()
+    # wait.until(ElementHasXpath(continue_xpath)).click()
+    # finish = datetime.now()
+    # diff = finish - start
+    # print('Time to use wait.until(ElementHasXpath(continue_xpath)).click(): ' + str(diff.total_seconds()))
+
+    while True:
+        try:
+            driver.find_element_by_xpath(submit_xpath).click()
+        except NoSuchElementException:
+            try:
+                driver.find_element_by_id('cCard1').click()
+            except NoSuchElementException:
+                continue
+            else:
+                wait.until(ElementHasXpath(continue_xpath)).click()
+                wait.until(ElementHasXpath(submit_xpath)).click()
+                break
+        else:
+            break
+    print(datetime.now())
     return driver
 
 
