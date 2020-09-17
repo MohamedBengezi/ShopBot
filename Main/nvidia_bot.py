@@ -52,20 +52,14 @@ class ElementHasId(object):
 def run(username, password, cvv):
     continue_xpath = "//input[@type='submit' and @value='continue']"
     submit_xpath = "//input[@type='submit' and @value='submit']"
-    card_radio_xpath = "//input[(@id='cCard0' or @id='cCard1') and @type='radio']"
     print('Starting Now')
     print(datetime.now())
     driver = webdriver.Chrome('Main\chromedriver.exe')
     wait = WebDriverWait(driver, 15, poll_frequency=0.01)
-    wait_add = WebDriverWait(driver, 5, poll_frequency=0.01)
+    wait_add = WebDriverWait(driver, 10, poll_frequency=0.01)
     driver.get('https://store.nvidia.com/DRHM/store?Action=Logout&SiteID=nvidia&Locale=en_US&ThemeID=326200&Env=BASE&nextAction=help')
-    time.sleep(2)
-    # wait.until(ElementHasId('loginEmail')).send_keys(str(username))
-    # login_button = wait.until(ElementHasId('loginPassword'))
-    # login_button.send_keys(str(password))
-    # login_button.submit()
-    # driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%203080")
-    driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%202060%20SUPER")
+    time.sleep(10)
+    driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%203080")
     while True:
         try:
             add_to_cart_button = wait_add.until(ElementHasPartial('CART'))
@@ -81,35 +75,11 @@ def run(username, password, cvv):
     wait.until(ElementHasId('dr_cc_login')).click()
     wait.until(ElementHasXpath(continue_xpath)).click()
     wait.until(ElementHasId('cardSecurityCode')).send_keys(str(cvv))
-    # wait.until(ElementHasXpath(card_radio_xpath)).click()
     wait.until(ElementHasXpath(continue_xpath)).click()
-    # wait.until(ElementHasXpath(submit_xpath)).click()  # SUBMIT UNCOMMENT
+    wait.until(ElementHasXpath(submit_xpath)).click()
     finish = datetime.now()
     diff = finish - start
     print('Checkout time: ' + str(diff.total_seconds()))
-
-    # print('before while')
-    # while True:
-    #     try:
-    #         driver.find_element_by_id('cCard0').click()
-    #         print('radio clicked')
-    #     except NoSuchElementException:
-    #         try:
-    #             # driver.find_element_by_xpath(submit_xpath).click()  # SUBMIT UNCOMMENT
-    #             submitter = driver.find_element_by_xpath(submit_xpath)  # SUBMIT COMMENT
-    #             print('found submit')
-    #         except NoSuchElementException:
-    #             print('could not find submit')
-    #             continue
-    #         else:
-    #             break
-    #     else:
-    #         print('else reached')
-    #         wait.until(ElementHasXpath(continue_xpath)).click()  # CONTINUE OPTION wait.until(ElementHasXpath(continue_xpath)).click()
-    #         # wait.until(ElementHasXpath(submit_xpath)).click()  # SUBMIT UNCOMMENT
-    #         print('continue clicked')
-    #         break
-
     print(datetime.now())
     return driver
 
