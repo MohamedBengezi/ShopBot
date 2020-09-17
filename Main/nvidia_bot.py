@@ -74,18 +74,18 @@ def run(username, password, cvv):
     wait.until(ElementHasClass('cart__checkout-button')).click()
     while True:
         try:
-            driver.find_element_by_xpath(continue_xpath).click()
+            driver.find_element_by_id('loginID').send_keys(str(username))
         except NoSuchElementException:
             try:
-                driver.find_element_by_id('loginID').send_keys(str(username))
+                driver.find_element_by_xpath(continue_xpath).click()
             except NoSuchElementException:
                 continue
             else:
-                wait.until(ElementHasId('loginPass')).send_keys(str(password))
-                wait.until(ElementHasId('dr_cc_login')).click()
-                wait.until(ElementHasXpath(continue_xpath)).click()
                 break
         else:
+            wait.until(ElementHasId('loginPass')).send_keys(str(password))
+            wait.until(ElementHasId('dr_cc_login')).click()
+            wait.until(ElementHasXpath(continue_xpath)).click()
             break
     wait.until(ElementHasId('cardSecurityCode')).send_keys(str(cvv))
     wait.until(ElementHasXpath(continue_xpath)).click()
