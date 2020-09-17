@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from datetime import datetime
+import time
 
 
 class ElementHasPartial(object):
@@ -54,13 +55,13 @@ def run(username, password, cvv):
     print('Starting Now')
     print(datetime.now())
     driver = webdriver.Chrome('Main\chromedriver.exe')
-    driver.implicitly_wait(15)
     wait = WebDriverWait(driver, 15, poll_frequency=0.01)
     wait_add = WebDriverWait(driver, 5, poll_frequency=0.01)
     driver.get('https://store.nvidia.com/DRHM/store?Action=Logout&SiteID=nvidia&Locale=en_US&ThemeID=326200&Env=BASE&nextAction=help')
     # wait.until(ElementHasId('loginEmail')).send_keys(str(username))
     # wait.until(ElementHasId('loginPassword')).send_keys(str(password))
     # wait.until(ElementHasXpath("//input[@type='submit' and @value='login']")).click()
+    time.sleep(10)
     # driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%203080")
     driver.get("https://www.nvidia.com/en-us/shop/geforce/gpu/?page=1&limit=1&locale=en-us&category=GPU&search=NVIDIA%20GEFORCE%20RTX%202060%20SUPER")
     while True:
@@ -72,21 +73,10 @@ def run(username, password, cvv):
             add_to_cart_button.click()
             break
     wait.until(ElementHasClass('cart__checkout-button')).click()
-    while True:
-        try:
-            driver.find_element_by_id('loginID').send_keys(str(username))
-        except NoSuchElementException:
-            try:
-                driver.find_element_by_xpath(continue_xpath).click()
-            except NoSuchElementException:
-                continue
-            else:
-                break
-        else:
-            wait.until(ElementHasId('loginPass')).send_keys(str(password))
-            wait.until(ElementHasId('dr_cc_login')).click()
-            wait.until(ElementHasXpath(continue_xpath)).click()
-            break
+    wait.until(ElementHasId('loginID')).send_keys(str(username))
+    wait.until(ElementHasId('loginPass')).send_keys(str(password))
+    wait.until(ElementHasId('dr_cc_login')).click()
+    wait.until(ElementHasXpath(continue_xpath)).click()
     wait.until(ElementHasId('cardSecurityCode')).send_keys(str(cvv))
     wait.until(ElementHasXpath(continue_xpath)).click()
 
