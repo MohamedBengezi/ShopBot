@@ -99,7 +99,13 @@ if __name__ == '__main__':
         prompt='Whats your NVIDIA password? ') if args.password is None else args.password
     cvv_str = getpass.getpass(
         prompt='Whats your Credit card cvv? ') if args.cvv is None else args.cvv
-    main_driver = run(username=user_str, password=pass_str, cvv=cvv_str)
-    if not args.quit:
-        input('Press enter to quit\n')
-    main_driver.quit()
+    try:
+        main_driver = run(username=user_str, password=pass_str, cvv=cvv_str)
+    except Exception as e:
+        print(e)
+        if not args.quit:
+            input('Press enter to quit\n')
+    else:
+        if not args.quit:
+            input('Press enter to quit\n')
+        main_driver.quit()
