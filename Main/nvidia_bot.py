@@ -54,7 +54,10 @@ def run(username, password, cvv):
     submit_xpath = "//input[@type='submit' and @value='submit']"
     print('Starting Now')
     print(datetime.now())
-    driver = webdriver.Chrome('Main\chromedriver.exe')
+    caps = webdriver.DesiredCapabilities.CHROME.copy()
+    caps['acceptInsecureCerts'] = True
+    caps['acceptSslCerts'] = True
+    driver = webdriver.Chrome('Main\chromedriver.exe', desired_capabilities=caps)
     wait = WebDriverWait(driver, 15, poll_frequency=0.01)
     wait_add = WebDriverWait(driver, 10, poll_frequency=0.01)
     driver.get('https://store.nvidia.com/DRHM/store?Action=Logout&SiteID=nvidia&Locale=en_US&ThemeID=326200&Env=BASE&nextAction=help')
