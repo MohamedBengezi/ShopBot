@@ -16,5 +16,6 @@ Currently, this bot is able to find the recently loaded products on a shopify si
 
 # Running the Bot
 1. Open up the terminal, and locate to the folder that contains the file names "main.py", use this link if you don't know how to do this https://help.ubuntu.com/community/UsingTheTerminal
-2. Once in the folder, simply type in "python main.py" to start the bot
-3. You should see the bot to start running
+2. Once in the folder type "pip install -r reqs.txt" or "pip3 install -r reqs.txt"
+3. Type in "python main.py" or "python3 main.py" to start the bot
+4. You should see the bot to start running
